@@ -18,15 +18,10 @@ Vagrant.configure("2") do |config|
   config.omnibus.chef_version = :latest
 
   # Install apt-cacher-ng
+  # Do not configure local system to use the proxy as the cacher-client makes
+  # Apt to use the not-yet-installed proxy
   config.vm.provision :chef_solo do |chef|
     chef.add_recipe 'apt::default'
     chef.add_recipe 'apt::cacher-ng'
-    chef.add_recipe 'apt::cacher-client'
-
-    chef.json = {
-      :apt => {
-        :cacher_ipaddress => IP
-      }
-    }
   end
 end
