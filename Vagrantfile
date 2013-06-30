@@ -17,6 +17,12 @@ Vagrant.configure("2") do |config|
   config.berkshelf.enabled = true
   config.omnibus.chef_version = :latest
 
+  # Override global vagrant-proxyconf settings
+  if defined? VagrantPlugins::ProxyConf
+    config.apt_proxy.http  = false
+    config.apt_proxy.https = false
+  end
+
   # Install apt-cacher-ng
   # Do not configure local system to use the proxy as the cacher-client makes
   # Apt to use the not-yet-installed proxy
